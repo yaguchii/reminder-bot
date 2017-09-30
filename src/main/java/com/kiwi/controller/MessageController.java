@@ -56,5 +56,7 @@ class MessageController {
                         .build()
                         .replyMessage(replyMessage)
                         .execute();
+
+        log.info(response.code() + ":" + response.message());
     }
 }
