@@ -22,7 +22,7 @@ import java.util.List;
 class MessageController {
 
     void eventHandle(MessageEvent<TextMessageContent> event) throws Exception {
-
+        log.info("text message start");
         sendConfirmMessage(event.getReplyToken(), event.getMessage().getText());
 
     }
