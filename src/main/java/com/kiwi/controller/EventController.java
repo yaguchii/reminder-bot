@@ -22,7 +22,6 @@ public class EventController {
     public void eventHandle(Event event) throws Exception {
 
         if (event instanceof MessageEvent) {
-            log.info("message event");
             final MessageEvent<?> messageEvent = (MessageEvent<?>) event;
             if (messageEvent.getMessage() instanceof TextMessageContent) {
                 messageController.eventHandle((MessageEvent<TextMessageContent>) event);

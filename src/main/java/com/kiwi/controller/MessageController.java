@@ -22,16 +22,14 @@ import java.util.List;
 class MessageController {
 
     void eventHandle(MessageEvent<TextMessageContent> event) throws Exception {
-        log.info("text message start");
         sendConfirmMessage(event.getReplyToken(), event.getMessage().getText());
-
     }
 
     private void sendConfirmMessage(String replyToken, String message) throws Exception {
 
         List<Action> actions = new ArrayList<>();
         DatetimePickerAction datetimePickerAction = new DatetimePickerAction(
-                "label",
+                "Yes",
                 "set:" + message,
                 "datetime");
         MessageAction messageAction = new MessageAction(

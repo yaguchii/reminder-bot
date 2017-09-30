@@ -16,5 +16,10 @@ class PostbackController {
         Map<String, String> map = event.getPostbackContent().getParams();
         log.info(postackData);
         log.info(map.toString());
+        String time = map.get("datetime");
+
+
+        // postackDataがsetで始まる場合、
+        // set:{text}
     }
 }
