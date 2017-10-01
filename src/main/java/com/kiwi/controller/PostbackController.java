@@ -1,5 +1,6 @@
 package com.kiwi.controller;
 
+import com.kiwi.util.MessagingUtil;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.profile.UserProfileResponse;
@@ -19,6 +20,9 @@ class PostbackController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private MessagingUtil messagingUtil;
 
     private static Jedis getConnection() throws Exception {
         URI redisURI = new URI(System.getenv("REDIS_URL"));
@@ -46,6 +50,7 @@ class PostbackController {
             Jedis jedis = getConnection();
             jedis.lpush(key, value);
 
+            messagingUtil.pushText(event.getReplyToken(), "Set up okay.");
         }
     }
 }

@@ -22,6 +22,12 @@ import java.util.List;
 class MessageController {
 
     void eventHandle(MessageEvent<TextMessageContent> event) throws Exception {
+
+        // Noが選択されたときのtextは無視する
+        if (event.getMessage().getText().equals("No")) {
+            return;
+        }
+
         sendConfirmMessage(event.getReplyToken(), event.getMessage().getText());
     }
 
@@ -39,7 +45,7 @@ class MessageController {
         actions.add(datetimePickerAction);
         actions.add(messageAction);
 
-        ConfirmTemplate confirmTemplate = new ConfirmTemplate("Do you wanna set a remainder?", actions);
+        ConfirmTemplate confirmTemplate = new ConfirmTemplate("Do you want to set a reminder?", actions);
         TemplateMessage templateMessage = new TemplateMessage(
                 "this is a confirm template",
                 confirmTemplate);

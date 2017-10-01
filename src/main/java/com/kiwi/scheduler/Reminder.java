@@ -44,7 +44,7 @@ public class Reminder {
             while (jedis.exists(key)) {
                 String remindText = jedis.lpop(key);
                 // push
-                messagingUtil.pushText(userId, remindText);
+                messagingUtil.pushText(userId, "[Remind]\n" + remindText);
             }
         }
     }
