@@ -37,20 +37,16 @@ class PostbackController {
                         .build()
                         .getProfile(event.getSource().getUserId())
                         .execute();
+
         if (response.isSuccessful()) {
-
             UserProfileResponse profile = response.body();
-            String postackData = event.getPostbackContent().getData();
             Map<String, String> map = event.getPostbackContent().getParams();
-            log.info(postackData);
-            log.info(map.toString());
-
             String key = profile.getUserId() + ":" + map.get("datetime");
             String value = event.getPostbackContent().getData().split(":")[1];
             Jedis jedis = getConnection();
             jedis.lpush(key, value);
-
-            messagingUtil.pushText(event.getReplyToken(), "Set up okay.");
+            // push
+            messagingUtil.pushText(event.getSource().getUserId(), "Set up okay.");
         }
     }
 }

@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import retrofit2.Response;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,26 +22,19 @@ import java.util.List;
 class MessageController {
 
     void eventHandle(MessageEvent<TextMessageContent> event) throws Exception {
-
         // Noが選択されたときのtextは無視する
         if (event.getMessage().getText().equals("No")) {
             return;
         }
-
         sendConfirmMessage(event.getReplyToken(), event.getMessage().getText());
     }
 
     private void sendConfirmMessage(String replyToken, String message) throws Exception {
-
         List<Action> actions = new ArrayList<>();
         DatetimePickerAction datetimePickerAction = new DatetimePickerAction(
                 "Yes",
                 "set:" + message,
-                "datetime",
-                LocalDateTime.now().plusHours(9L).truncatedTo(ChronoUnit.MINUTES).toString(),
-                "2100-12-31T23:59",
-                LocalDateTime.now().plusHours(9L).truncatedTo(ChronoUnit.MINUTES).toString());
-
+                "datetime");
         MessageAction messageAction = new MessageAction(
                 "No",
                 "No");
