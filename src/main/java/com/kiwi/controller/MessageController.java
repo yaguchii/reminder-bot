@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import retrofit2.Response;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,11 @@ class MessageController {
         DatetimePickerAction datetimePickerAction = new DatetimePickerAction(
                 "Yes",
                 "set:" + message,
-                "datetime");
+                "datetime",
+                LocalDateTime.now().plusHours(9L).truncatedTo(ChronoUnit.MINUTES).toString(),
+                "2100-12-31T23:59",
+                LocalDateTime.now().plusHours(9L).truncatedTo(ChronoUnit.MINUTES).toString());
+
         MessageAction messageAction = new MessageAction(
                 "No",
                 "No");
