@@ -18,6 +18,8 @@ import java.util.Map;
 @Controller
 class PostbackController {
 
+    private static final String SET_UP_MESSAGE = "Set up okay. I will remind you. see you later.";
+
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -46,7 +48,7 @@ class PostbackController {
             Jedis jedis = getConnection();
             jedis.lpush(key, value);
             // push
-            messagingUtil.pushText(event.getSource().getUserId(), "Set up okay.");
+            messagingUtil.pushText(event.getSource().getUserId(), SET_UP_MESSAGE);
         }
     }
 }
