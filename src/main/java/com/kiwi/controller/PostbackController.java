@@ -1,12 +1,12 @@
 package com.kiwi.controller;
 
+import com.kiwi.util.AESEncryption;
 import com.kiwi.util.MessagingUtil;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import redis.clients.jedis.Jedis;
 import retrofit2.Response;
@@ -21,7 +21,7 @@ class PostbackController {
     private static final String SET_UP_MESSAGE = "Set up okay. I will remind you. see you later.";
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private AESEncryption encryption;
 
     @Autowired
     private MessagingUtil messagingUtil;
@@ -46,7 +46,7 @@ class PostbackController {
             String key = profile.getUserId() + ":" + map.get("datetime");
             String value = event.getPostbackContent().getData().split(":")[1];
             Jedis jedis = getConnection();
-            jedis.lpush(key, value);
+            jedis.lpush(key, encryption.encrypto(value));
             // push
             messagingUtil.pushText(event.getSource().getUserId(), SET_UP_MESSAGE);
         }

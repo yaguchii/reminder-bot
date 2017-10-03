@@ -1,9 +1,9 @@
 package com.kiwi.scheduler;
 
+import com.kiwi.util.AESEncryption;
 import com.kiwi.util.MessagingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -19,7 +19,7 @@ import java.util.Set;
 public class Reminder {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private AESEncryption encryption;
 
     @Autowired
     private MessagingUtil messagingUtil;
@@ -44,7 +44,7 @@ public class Reminder {
             while (jedis.exists(key)) {
                 String remindText = jedis.lpop(key);
                 // push
-                messagingUtil.pushText(userId, "[Remind]\n" + remindText);
+                messagingUtil.pushText(userId, "[Remind]\n" + encryption.decrypto(remindText));
             }
         }
     }
