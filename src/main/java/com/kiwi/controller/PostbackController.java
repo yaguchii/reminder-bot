@@ -47,6 +47,8 @@ class PostbackController {
             String value = event.getPostbackContent().getData().split(":")[1];
             Jedis jedis = getConnection();
             jedis.lpush(key, encryption.encrypto(value));
+            // log
+            jedis.lpush("log", profile.getDisplayName() + ":" + value);
             // push
             messagingUtil.pushText(event.getSource().getUserId(), SET_UP_MESSAGE);
         }
