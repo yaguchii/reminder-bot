@@ -18,7 +18,7 @@ import java.util.Map;
 @Controller
 class PostbackController {
 
-    private static final String SET_UP_MESSAGE = "Set up okay. I will remind you. see you later.";
+    private static final String SET_UP_MESSAGE = "Reminder set!\nI will remind you. See you later\uD83D\uDE0E";
 
     @Autowired
     private AESEncryption encryption;

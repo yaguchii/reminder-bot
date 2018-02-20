@@ -21,7 +21,10 @@ import java.util.List;
 @Controller
 class MessageController {
 
+    private static final String CONFIRM_MESSAGE = "Do you want to set this reminder?";
+
     void eventHandle(MessageEvent<TextMessageContent> event) throws Exception {
+
         // Noが選択されたときのtextは無視する
         if (event.getMessage().getText().equals("No")) {
             return;
@@ -42,7 +45,7 @@ class MessageController {
         actions.add(datetimePickerAction);
         actions.add(messageAction);
 
-        ConfirmTemplate confirmTemplate = new ConfirmTemplate("Do you want to set a reminder?", actions);
+        ConfirmTemplate confirmTemplate = new ConfirmTemplate(CONFIRM_MESSAGE, actions);
         TemplateMessage templateMessage = new TemplateMessage(
                 "this is a confirm template",
                 confirmTemplate);
